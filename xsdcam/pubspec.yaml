@@ -40,6 +40,7 @@ dependencies:
   path: ^1.8.2
   crypto: ^3.0.0
   aes_crypt: ^0.1.1
+  flutter_image_compress: ^1.0.0-nullsafety
 
 dev_dependencies:
   flutter_test:

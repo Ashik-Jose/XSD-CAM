@@ -78,7 +78,7 @@ class _CapturePagStateState extends State<CapturePagState> {
                                                   //   print('File Saved')
                                                   // });
 
-                                                showDialog(context: context, builder: (context)=>saveImageModal());
+                                                showDialog(context: context, builder: (context)=>saveImageModal(context,file));
                                                   
                                                 },
                                                 icon: const Icon(Icons.save))],

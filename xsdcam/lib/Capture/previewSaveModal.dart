@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
@@ -29,14 +33,14 @@ String createKey(String imgName) {
   }
 
   var bytes = utf8.encode(resultKey);
-  var hashResult = sha256.convert(bytes );
+  var hashResult = sha256.convert(bytes);
 
   return hashResult.toString();
 }
 
-saveImageModal(XFile file) async {
+saveImageModal(BuildContext context,XFile file) async {
   Directory dir = await getApplicationDocumentsDirectory();
-  
+
   String imgName = 'img_${generateRandomString(7)}.jpg';
   return AlertDialog(
     title: const Text('Enter Image details'),
@@ -67,7 +71,15 @@ saveImageModal(XFile file) async {
         child: TextButton(
           onPressed: () async {
             File file1 = File(path.join(dir.path, imgName));
-            // Navigator.pop(context);
+            String key = createKey(imgName);
+            var crypt = AesCrypt(key);
+            crypt.setOverwriteMode(AesCryptOwMode.on);
+            Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(
+        file.path,
+        quality: 50, // Adjust the quality as needed
+      );
+            await crypt.encryptDataToFile( compressedImage, file1.toString());
+            Navigator.pop(context);
           },
           child: const Text(
             'Save',
