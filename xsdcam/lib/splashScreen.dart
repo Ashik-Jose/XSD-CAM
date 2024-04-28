@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xsdcam/Home/signInScreen.dart';
 
 import 'Home/home.dart';
 
@@ -15,12 +16,17 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignInScreen()));
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    return const Text('XSD CAM');
+    return const SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Image(image: AssetImage('assets/logo.png'),fit: BoxFit.fill)
+        )
+      ),
+    );
   }
 }

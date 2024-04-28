@@ -73,12 +73,13 @@ class _CapturePagStateState extends State<CapturePagState> {
                                           actions: [
                                             IconButton(
                                                 onPressed: () async {
+                                                  Directory dir = await getApplicationDocumentsDirectory();
                                                   // await file1.writeAsBytes(await file.readAsBytes()).then((value) => {
                                                   //   Navigator.pop(context),
                                                   //   print('File Saved')
                                                   // });
 
-                                                showDialog(context: context, builder: (context)=>saveImageModal(context,file));
+                                                showDialog(context: context, builder: (context)=>saveImageModal(context, file,dir));
                                                   
                                                 },
                                                 icon: const Icon(Icons.save))],

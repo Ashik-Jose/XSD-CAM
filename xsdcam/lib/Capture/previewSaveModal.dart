@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:aes_crypt/aes_crypt.dart';
+import 'package:aes_crypt_null_safe/aes_crypt_null_safe.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart' as path;
@@ -10,7 +10,9 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
+import 'package:xsdcam/Home/home.dart';
 
+String userId='';
 String generateRandomString(int length) {
   var random = Random.secure();
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,9 +21,10 @@ String generateRandomString(int length) {
 }
 
 String createKey(String imgName) {
+  int nameLength = imgName.length;
+  imgName=userId+imgName;
   String altWord = '';
   String resultKey = '';
-  int nameLength = imgName.length;
   int nameChar = 0;
   for (int i = 0; i < imgName.length; i += 2) {
     altWord += imgName[i];
@@ -38,21 +41,20 @@ String createKey(String imgName) {
   return hashResult.toString();
 }
 
-saveImageModal(BuildContext context,XFile file) async {
-  Directory dir = await getApplicationDocumentsDirectory();
-
+saveImageModal(BuildContext context,XFile file,Directory dir)  {
   String imgName = 'img_${generateRandomString(7)}.jpg';
   return AlertDialog(
-    title: const Text('Enter Image details'),
-    content: Column(
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32.0))),
+    title: const Text('Enter Image details',style: TextStyle(fontWeight: FontWeight.bold),),
+    content:Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Name your Image',
-          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         TextField(
-          // keyboardType: TextInputType.text,
-          obscureText: true,
           controller: TextEditingController(text: imgName),
           decoration: const InputDecoration(
             border: OutlineInputBorder(
@@ -71,15 +73,17 @@ saveImageModal(BuildContext context,XFile file) async {
         child: TextButton(
           onPressed: () async {
             File file1 = File(path.join(dir.path, imgName));
-            String key = createKey(imgName);
+            String key = createKey(imgName.split('.jpg')[0]);
             var crypt = AesCrypt(key);
             crypt.setOverwriteMode(AesCryptOwMode.on);
             Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(
         file.path,
         quality: 50, // Adjust the quality as needed
       );
-            await crypt.encryptDataToFile( compressedImage, file1.toString());
+            String encrFile=await crypt.encryptDataToFile( compressedImage!, file1.path);
+            print(encrFile);
             Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false);
           },
           child: const Text(
             'Save',

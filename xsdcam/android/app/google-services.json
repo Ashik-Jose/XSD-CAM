@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "645034581166",
+    "project_id": "xsd-cam",
+    "storage_bucket": "xsd-cam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645034581166:android:4d44a7060955ecbdeb613f",
+        "android_client_info": {
+          "package_name": "com.example.xsdcam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645034581166-jvp0cje9lldlcnhd9kl573h63r78ku67.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.xsdcam",
+            "certificate_hash": "4007ba8b452789cdef11cdf7ce551e4e4619d47f"
+          }
+        },
+        {
+          "client_id": "645034581166-ln3cavb2ia11ul81fjjdjlsg7sf0tc7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLVJ5AsEKycRLe-dSN8n-C4V9iE5SRnuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645034581166-ln3cavb2ia11ul81fjjdjlsg7sf0tc7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
